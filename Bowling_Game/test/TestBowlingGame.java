@@ -18,4 +18,36 @@ public class TestBowlingGame extends TestCase {
 		bg.nextPitch();
 		bg.printSequence();
 	}
+	
+	public void testroll() throws Exception {
+		BowlingGame bg = new BowlingGame();
+		bg.roll(9);
+		bg.roll(1);
+		bg.roll(8);
+		bg.roll(0);
+		bg.roll(10);
+		bg.roll(10);
+		bg.roll(8);
+		bg.roll(0);
+		bg.roll(10);
+		bg.roll(8);
+		bg.roll(1);
+		bg.roll(9);
+		bg.roll(1);
+		bg.roll(8);
+		bg.roll(1);
+		bg.roll(10);
+		bg.roll(9);
+		bg.roll(1);
+		
+		bg.printSequence();
+		
+		for (int[] points : bg.pointPerPitch) {
+			for (int i : points) {
+				System.out.print(i + "\t");
+			}
+			System.out.println();
+		}
+		
+	}
 }
