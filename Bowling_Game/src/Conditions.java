@@ -3,7 +3,7 @@ public class Conditions {
 	private int pitchNum = 0;
 
 	public void nextFrame() {
-		if (frameNum <9) {
+		if (frameNum < 9) {
 			frameNum++;
 			pitchNum = 0;
 		}
@@ -18,15 +18,15 @@ public class Conditions {
 	}
 
 	public int getFrame() {
-		return frameNum + 1;
+		return frameNum;
 	}
 
 	public int getPitch() {
-		return pitchNum + 1;
+		return pitchNum;
 	}
 
 	public void print() {
-		System.out.println("현재 " + getFrame() + "번째 프레임, " + getPitch()
-				+ "번째 굴릴 차례");
+		System.out.println("현재 " + (getFrame() + 1) + "번째 프레임, "
+				+ (getPitch() + 1) + "번째 굴릴 차례");
 	}
 }
