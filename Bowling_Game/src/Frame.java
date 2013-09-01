@@ -13,7 +13,7 @@ public class Frame {
 		frameNum = x;
 	}
 	
-	public Frame nextFrame(){
+	public Frame next(){
 		try{
 			if (frameNum == 9) {
 				throw new gameOverException();

@@ -42,9 +42,9 @@ public class FrameTest extends TestCase {
 	public void testNextFrame() throws Exception {
 		
 		Frame frame = new Frame(8);
-		frame = frame.nextFrame();
+		frame = frame.next();
 		frame.addPinNumber(10);
-		frame = frame.nextFrame();
+		frame = frame.next();
 		
 	}
 	
@@ -52,7 +52,7 @@ public class FrameTest extends TestCase {
 		Frame frame = new Frame();
 		int randomNum = (int) Math.round(Math.random() * (10));
 		for (int i = 1; i <=randomNum ; i++){
-			frame = frame.nextFrame();
+			frame = frame.next();
 		}
 		assertEquals(randomNum, frame.getFrameNum());
 	}
