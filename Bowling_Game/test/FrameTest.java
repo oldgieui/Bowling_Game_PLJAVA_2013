@@ -7,6 +7,7 @@ public class FrameTest extends TestCase {
 		int randomNum = (int) Math.round(Math.random() * (10-0+1));
 		frame.addPinNumber(randomNum);
 		assertTrue(frame.getFrameResult().contains(randomNum));
+		
 		frame.addPinNumber(randomNum);
 		frame.addPinNumber(randomNum);
 		frame.addPinNumber(randomNum);
@@ -16,11 +17,10 @@ public class FrameTest extends TestCase {
 		assertEquals(2, frame.getFrameResult().size());
 	}
 	
-	public void testResetFrame() throws Exception {
-		Frame frame = new Frame();
-		frame.addPinNumber(1);
-		frame.resetFrame();
-		assertTrue(frame.getFrameResult().isEmpty());
+	public void testPrintInfo() throws Exception {
+		Frame frame = new Frame(7);
+		frame.addPinNumber(7);
+		frame.printInfo();
 	}
 	
 	public void testIsStrike() throws Exception {
@@ -40,21 +40,19 @@ public class FrameTest extends TestCase {
 	}
 	
 	public void testNextFrame() throws Exception {
-		Frame frame = new Frame();
+		
+		Frame frame = new Frame(8);
+		frame = frame.nextFrame();
 		frame.addPinNumber(10);
-		assertEquals(1, frame.getFrameResult().size());
-		for (int i = 0; i < 9; i++) {
-			assertEquals(i, frame.getFrameNum());
-			frame.nextFrame();
-		}
-		assertEquals(0, frame.getFrameResult().size());
+		frame = frame.nextFrame();
+		
 	}
 	
 	public void testGetFrame() throws Exception {
 		Frame frame = new Frame();
 		int randomNum = (int) Math.round(Math.random() * (10));
 		for (int i = 1; i <=randomNum ; i++){
-			frame.nextFrame();
+			frame = frame.nextFrame();
 		}
 		assertEquals(randomNum, frame.getFrameNum());
 	}
@@ -67,6 +65,16 @@ public class FrameTest extends TestCase {
 		frame.addPinNumber(4);
 		assertEquals(2, frame.getPitchNum());
 //		frame.addPinNumber(2);
-//		assertEquals(3, frame.getPitch());
+//		assertEquals(3, frame.getPitchNum());
+
+		frame = new Frame(9);
+		assertEquals(0, frame.getPitchNum());
+		frame.addPinNumber(3);
+		assertEquals(1, frame.getPitchNum());
+		frame.addPinNumber(7);
+		assertEquals(2, frame.getPitchNum());
+		frame.addPinNumber(2);
+		assertEquals(3, frame.getPitchNum());
+		//10프레임의 경우 스트라이크나 스페어가 아니면 세 번째 값을 입력할 수 없음
 	}
 }

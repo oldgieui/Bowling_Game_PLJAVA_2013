@@ -9,28 +9,45 @@ public class Frame {
 	public Frame() {
 	}
 	
-	public void resetFrame() {
-		frameResult.removeAll(frameResult);
-	}
-
-	public void nextFrame() {
-		if (frameNum < 9) {
-			frameNum++;
-			resetFrame();
-		}
-		// try catch 넣을것
+	public Frame(int x){
+		frameNum = x;
 	}
 	
-
-	// 첫번째에서 7개 넣고 두번째에서 5개 넣는 식의 잘못된 입력에 대처할 수 있는 기능 넣을 것
-	public void addPinNumber(int x) {
-		if (frameResult.size() < 2 && (x <= 10 && x >= 0)) {
-			frameResult.add(x);
-			return;
+	public Frame nextFrame(){
+		try{
+			if (frameNum == 9) {
+				throw new gameOverException();
+			}
+			return new Frame(frameNum+1);
+		}catch(gameOverException e){
+			System.out.println("game over");
+			return null;
 		}
-		if (frameResult.size() == 2 && frameNum == 9 && (x <= 10 && x >= 0) && (isSpare() || isStrike())) {
-			frameResult.add(x);
-			return;
+	}
+
+	public void addPinNumber(int x){
+		try{
+			if (x>10 || x<0) {
+				throw new pinNumberException();
+			}
+			if (frameResult.size() == 0) {
+				frameResult.add(x);
+				return;
+			}
+			if (frameResult.size() == 1) {
+				if(isStrike() == false && x > (10 - frameResult.get(0))){
+					throw new pinNumberException();
+				}
+				frameResult.add(x);
+				return;
+			}
+
+			if (frameResult.size() == 2 && frameNum == 9 && (isSpare() || isStrike())) {
+				frameResult.add(x);
+				return;
+			}
+		}catch(pinNumberException e){
+			System.out.println("잘못된 핀 개수를 입력했음");
 		}
 	}
 
@@ -56,7 +73,7 @@ public class Frame {
 		return frameResult.size();
 	}
 
-	public void print() {
+	public void printInfo() {
 		System.out.println("현재 " + (getFrameNum() + 1) + "번째 프레임, "
 				+ (getPitchNum() + 1) + "번째 굴릴 차례");
 	}

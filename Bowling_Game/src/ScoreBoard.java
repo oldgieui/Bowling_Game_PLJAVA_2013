@@ -2,53 +2,84 @@ import java.util.ArrayList;
 
 
 public class ScoreBoard {
-	ArrayList<String> frameBoard = new ArrayList<String>();
-	ArrayList<Integer> gameBoard = new ArrayList<Integer>();
+	private ArrayList <Frame> frameList = new ArrayList<Frame>();
+	private ArrayList <String>	frameView = new ArrayList<String>();
+	private ArrayList <Integer> scoreBoard = new ArrayList<Integer>();
 	
-	public void setFrameBoard(Frame frame){
-		if (frame.getFrameNum() == 9) {
-			setTenthFrame(frame);
-			return;
+	public void setFrameList(Frame frame){
+		frameList.add(frame);
+	}
+	
+	public void setframeView(){
+		for (int i = 0; i < frameList.size(); i++) {
+			Frame currentFrame = frameList.get(i);
+			if (i == 9) {
+				setTenthFrameView(currentFrame);
+				continue;
+			}
+			if (currentFrame.isStrike()) {
+				frameView.add(i, "X");
+				continue;
+			}
+			if (currentFrame.isSpare()) {
+				frameView.add(i, currentFrame.getScoreOf(0) + ", /");
+				continue;
+			}
+			frameView.add(i, currentFrame.getScoreOf(0) + ", " + currentFrame.getScoreOf(1));
 		}
-		if (frame.isStrike()) {
-			frameBoard.add(frame.getFrameNum(), "X");
-			return;
-		}
-		if (frame.isSpare()) {
-			frameBoard.add(frame.getFrameNum(), frame.getScoreOf(0) + ", /");
-			return;
-		}
-		frameBoard.add(frame.getFrameNum(), frame.getScoreOf(0) + ", " + frame.getScoreOf(1));
 	}
 
-	private void setTenthFrame(Frame frame) {
-		if ((frame.isSpare() || frame.isStrike()) == false) {
-			frameBoard.add(9, frame.getScoreOf(0) + ", " + frame.getScoreOf(1));
-		}
-		if (frame.isStrike()) {
-			StringBuilder sb = new StringBuilder();
+	private void setTenthFrameView(Frame currentFrame) {
+		StringBuilder sb = new StringBuilder();
+		if (currentFrame.isStrike()) {
 			sb.append("X, ");
-			int rollSize = frame.getFrameResult().size();
-			if (rollSize < 2) {
-				frameBoard.add(9, sb.toString());
+			if (currentFrame.getScoreOf(1) == 10) {
+				sb.append("X, ");
+				if (currentFrame.getScoreOf(2) == 10) {
+					sb.append("X");
+					frameView.add(9, sb.toString());
+					return;
+				}
+				sb.append(currentFrame.getScoreOf(2));
+				frameView.add(9, sb.toString());
 				return;
 			}
-			if (frame.getFrameResult().size() >=2 && frame.getScoreOf(1)==10) {
-				sb.append("X, ");
-				if (frame.getFrameResult().size() >=2 && frame.getScoreOf(2)==10) {
-					sb.append("X");
-				}
-				else
-					sb.append(frame.getScoreOf(2));
+			if (currentFrame.getScoreOf(1) + currentFrame.getScoreOf(2) == 10) {
+				sb.append(currentFrame.getScoreOf(1)+", /");
+				frameView.add(9, sb.toString());
+				return;
 			}
-			else
-				sb.append(frame.getScoreOf(1)+", "+frame.getScoreOf(2));
-			frameBoard.add(9, sb.toString());
+			sb.append(currentFrame.getScoreOf(1) + ", " + currentFrame.getScoreOf(2));
+			frameView.add(9, sb.toString());
+			return;
 		}
-		if (frame.isSpare()) {
-			if (frame.getFrameResult().size() >2){
-				frameBoard.add(9, frame.getScoreOf(0)+", /" + frame.getScoreOf(2));
+		if (currentFrame.isSpare()) {
+			sb.append(currentFrame.getScoreOf(0)+", /, ");
+			if (currentFrame.getScoreOf(2)==10) {
+				sb.append("X");
+				frameView.add(9, sb.toString());
+				return;
 			}
+			sb.append(currentFrame.getScoreOf(2));
+			frameView.add(9, sb.toString());
+			return;
 		}
+		sb.append(currentFrame.getScoreOf(0) + ", " + currentFrame.getScoreOf(1));
+		frameView.add(9, sb.toString());
 	}
+
+	public String getFrameView(int i){
+		return frameView.get(i);
+	}
+	
+	public ArrayList<Frame> getFrameList(){
+		return frameList;
+	}
+
+	public Frame getFrameList(int i){
+		return frameList.get(i);
+	}
+	
+	
+	
 }
