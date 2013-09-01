@@ -6,14 +6,21 @@ public class FrameTest extends TestCase {
 		Frame frame = new Frame();
 		int randomNum = (int) Math.round(Math.random() * (10-0+1));
 		frame.addPinNumber(randomNum);
-		assertTrue(frame.frameResult.contains(randomNum));
+		assertTrue(frame.getFrameResult().contains(randomNum));
+		frame.addPinNumber(randomNum);
+		frame.addPinNumber(randomNum);
+		frame.addPinNumber(randomNum);
+		frame.addPinNumber(1);
+		frame.addPinNumber(2);
+		
+		assertEquals(2, frame.getFrameResult().size());
 	}
 	
 	public void testResetFrame() throws Exception {
 		Frame frame = new Frame();
 		frame.addPinNumber(1);
 		frame.resetFrame();
-		assertTrue(frame.frameResult.isEmpty());
+		assertTrue(frame.getFrameResult().isEmpty());
 	}
 	
 	public void testIsStrike() throws Exception {
@@ -30,15 +37,17 @@ public class FrameTest extends TestCase {
 		frame.addPinNumber(randomNum);
 		frame.addPinNumber(10 - randomNum);
 		assertTrue(frame.isSpare());
-		System.out.println(randomNum);
 	}
 	
 	public void testNextFrame() throws Exception {
 		Frame frame = new Frame();
-		for (int i = 1; i <= 9; i++) {
-			assertEquals(i, frame.getFrame());
+		frame.addPinNumber(10);
+		assertEquals(1, frame.getFrameResult().size());
+		for (int i = 0; i < 9; i++) {
+			assertEquals(i, frame.getFrameNum());
 			frame.nextFrame();
 		}
+		assertEquals(0, frame.getFrameResult().size());
 	}
 	
 	public void testGetFrame() throws Exception {
@@ -47,16 +56,16 @@ public class FrameTest extends TestCase {
 		for (int i = 1; i <=randomNum ; i++){
 			frame.nextFrame();
 		}
-		assertEquals(randomNum, frame.getFrame());
+		assertEquals(randomNum, frame.getFrameNum());
 	}
 	
 	public void testGetPitch() throws Exception {
 		Frame frame = new Frame();
-		assertEquals(0, frame.getPitch());
+		assertEquals(0, frame.getPitchNum());
 		frame.addPinNumber(3);
-		assertEquals(1, frame.getPitch());
+		assertEquals(1, frame.getPitchNum());
 		frame.addPinNumber(4);
-		assertEquals(2, frame.getPitch());
+		assertEquals(2, frame.getPitchNum());
 //		frame.addPinNumber(2);
 //		assertEquals(3, frame.getPitch());
 	}
