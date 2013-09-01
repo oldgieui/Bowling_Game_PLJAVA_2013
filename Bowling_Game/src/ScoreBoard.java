@@ -143,6 +143,7 @@ public class ScoreBoard {
 	
 	public void printTotalScore(){
 		setframeView();
+		setScoreBoard();
 		int[] totalScore = setTotalScore();
 		for (int i = 0; i < frameList.size(); i++) {
 			System.out.print("("+getFrameView(i)+") ");

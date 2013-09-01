@@ -1,33 +1,34 @@
 
 public class BowlingGame {
-	Frame frame = new Frame();
-	ScoreBoard board = new ScoreBoard();
+	private Frame frame = new Frame();
+	private ScoreBoard board = new ScoreBoard();
 	
 	public BowlingGame() {
 	}
 	
 	public void roll(int x){
 		frame.addPinNumber(x);
-		if (frame.isStrike()) {
-			setAndNext();
-			return;
-		}
-		if (frame.getFrameNum() <9 && frame.getFrameResult().size() == 2) {
-			setAndNext();
-			return;
-		}
-		if (frame.getFrameNum() == 9 && ((frame.isSpare() || frame.isStrike()) == false) && frame.getFrameResult().size() == 2) {
-			setAndNext();
-			return;
-		}
-		if (frame.getFrameNum() == 9 && frame.getFrameResult().size() ==3) {
-			setAndNext();
-			return;
+		if (frame.isEnd()) {
+			board.addFrameList(frame);
+			if (frame.getFrameNum() <9) {
+				frame = frame.next();
+			}
 		}
 	}
 	
-	public void setAndNext(){
-		board.setFrameBoard(frame);
-		frame.nextFrame();
+	public Frame getFrame(){
+		return frame;
+	}
+	
+	public ScoreBoard getScoreBoard(){
+		return board;
+	}
+	
+	public void printInfo(){
+		frame.printInfo();
+	}
+	
+	public void printScore(){
+		board.printTotalScore();
 	}
 }

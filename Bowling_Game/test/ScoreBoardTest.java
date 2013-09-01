@@ -145,8 +145,6 @@ public class ScoreBoardTest extends TestCase {
 		frame.addPinNumber(9);
 		frame.addPinNumber(1);
 		sbd.addFrameList(frame);
-		sbd.setframeView();
-		sbd.setScoreBoard();
 		sbd.printTotalScore();
 	}
 	

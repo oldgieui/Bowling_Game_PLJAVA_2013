@@ -25,6 +25,25 @@ public class Frame {
 		}
 	}
 
+	public boolean isEnd(){
+		if (frameNum == 9) {
+			if ((isSpare() || isStrike())==false && frameResult.size() == 2) {
+				return true;
+			}
+			if (frameResult.size() == 3) {
+				return true;
+			}
+			return false;
+		}
+		if (isStrike()) {
+			return true;
+		}
+		if (frameResult.size() == 2) {
+			return true;
+		}
+		return false;
+	}
+	
 	public void addPinNumber(int x){
 		try{
 			if (x>10 || x<0) {
@@ -74,8 +93,13 @@ public class Frame {
 	}
 
 	public void printInfo() {
+		if (getPitchNum() <3) {
+			System.out.println("현재 " + (getFrameNum() + 1) + "번째 프레임, "
+					+ (getPitchNum() + 1) + "번째 굴릴 차례");
+			return;
+		}
 		System.out.println("현재 " + (getFrameNum() + 1) + "번째 프레임, "
-				+ (getPitchNum() + 1) + "번째 굴릴 차례");
+				+ "투구차례 종료");
 	}
 	
 	public ArrayList<Integer> getFrameResult(){
